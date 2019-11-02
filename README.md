@@ -20,9 +20,9 @@ uuid -c 2
 uuid --format=json
 # prints as a JSON array
 uuid --upper
-# prints 
+# prints 5F8505A9-7D0A-40A0-9CAF-BADCA9C17D84
 ```
 
 ## Contributing
 
-This project observes the Contributor Covenant. See [code-of-conduct.txt]('./code-of-conduct.txt') for more info.
+This project observes the Contributor Covenant. See [code-of-conduct.txt](code-of-conduct.txt) for more info.
