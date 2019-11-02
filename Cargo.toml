@@ -1,0 +1,13 @@
+[package]
+name = "uuid_cli"
+version = "0.1.0"
+authors = ["Kellen Frodelius-Fujimoto <kellen@kellenfujimoto.com>"]
+edition = "2018"
+description = "A command line utility for genrating UUIDs"
+keywords = ["uuid", "utils", "guid", "unique"]
+categories = ["command-line-utilities"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+uuid = { version = "^0.8", features = ["v4"] }
