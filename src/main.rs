@@ -1,5 +1,5 @@
 use uuid::Uuid;
-use uuid_cli::get_app;
+use uuid_cli::{format_uuids, get_app, OutputFormat, UuidFormat};
 
 fn main() {
     let app = get_app();
@@ -7,13 +7,27 @@ fn main() {
 
     let count = matches
         .value_of("count")
-        .unwrap_or("1")
-        .parse::<isize>()
+        // `count` arg has a default value
+        .unwrap()
+        .parse::<usize>()
         .unwrap_or(1);
 
-    for _ in 0..count {
-        let generated = Uuid::new_v4();
+    let output_format = matches
+        .value_of("format")
+        // `format` arg has a default value
+        .unwrap()
+        .parse::<OutputFormat>()
+        .unwrap_or(OutputFormat::Unix);
 
-        println!("{}", generated);
+    let uuid_format;
+
+    if matches.is_present("upper") {
+        uuid_format = UuidFormat::Upper;
+    } else {
+        uuid_format = UuidFormat::Lower;
     }
+
+    let uuids = std::iter::repeat_with(|| Uuid::new_v4()).take(count).collect();
+
+    println!("{}", format_uuids(uuids, output_format, uuid_format));
 }

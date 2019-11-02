@@ -15,6 +15,12 @@ git clone https://github.com/rakenodiax/uuid_cli.git && uuid_cli && cargo instal
 ```
 uuid
 # prints 0a781908-9fad-4b4b-a558-d9f19513bfc2
+uuid -c 2
+# prints 2 UUIDs
+uuid --format=json
+# prints as a JSON array
+uuid --upper
+# prints 
 ```
 
 ## Contributing

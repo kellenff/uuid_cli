@@ -18,3 +18,4 @@ path = "src/main.rs"
 [dependencies]
 uuid = { version = "^0.8", features = ["v4"] }
 clap = "^2.33"
+serde_json = "1.0.41"
