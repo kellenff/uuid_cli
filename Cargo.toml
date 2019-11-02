@@ -6,8 +6,13 @@ edition = "2018"
 description = "A command line utility for genrating UUIDs"
 keywords = ["uuid", "utils", "guid", "unique"]
 categories = ["command-line-utilities"]
+repository = "https://github.com/rakenodiax/uuid_cli"
+readme = "README.md"
+license = "Apache-2.0 OR MIT"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "uuid"
+path = "src/main.rs"
 
 [dependencies]
 uuid = { version = "^0.8", features = ["v4"] }
