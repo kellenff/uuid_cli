@@ -19,15 +19,13 @@ fn main() {
         .parse::<OutputFormat>()
         .unwrap_or(OutputFormat::Unix);
 
-    let uuid_format;
-
-    if matches.is_present("upper") {
-        uuid_format = UuidFormat::Upper;
+    let uuid_format = if matches.is_present("upper") {
+        UuidFormat::Upper
     } else {
-        uuid_format = UuidFormat::Lower;
-    }
+        UuidFormat::Lower
+    };
 
-    let uuids = std::iter::repeat_with(|| Uuid::new_v4()).take(count).collect();
+    let uuids = std::iter::repeat_with(Uuid::new_v4).take(count).collect();
 
     println!("{}", format_uuids(uuids, output_format, uuid_format));
 }

@@ -53,7 +53,7 @@ fn format_uuid(id: &Uuid, uuid_format: UuidFormat) -> String {
 
     match uuid_format {
         UuidFormat::Lower => formatted,
-        UuidFormat::Upper => formatted.to_uppercase()
+        UuidFormat::Upper => formatted.to_uppercase(),
     }
 }
 
