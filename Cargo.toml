@@ -9,6 +9,7 @@ categories = ["command-line-utilities"]
 repository = "https://github.com/rakenodiax/uuid_cli"
 readme = "README.md"
 license = "Apache-2.0 OR MIT"
+default-run = "uuid"
 
 [[bin]]
 name = "uuid"
@@ -16,3 +17,4 @@ path = "src/main.rs"
 
 [dependencies]
 uuid = { version = "^0.8", features = ["v4"] }
+clap = "^2.33"
