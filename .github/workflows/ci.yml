@@ -34,3 +34,6 @@ jobs:
 
       - name: Check formatting
         run: cargo fmt --check
+
+      - name: Dry run publish
+        run: cargo publish --dry-run
