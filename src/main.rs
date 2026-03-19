@@ -1,31 +1,13 @@
+use clap::Parser;
 use uuid::Uuid;
-use uuid_cli::{format_uuids, get_app, OutputFormat, UuidFormat};
+use uuid_cli::{format_uuids, Cli};
 
 fn main() {
-    let app = get_app();
-    let matches = app.get_matches();
+    let cli = Cli::parse();
 
-    let count = matches
-        .value_of("count")
-        // `count` arg has a default value
-        .unwrap()
-        .parse::<usize>()
-        .unwrap_or(1);
+    let uuids: Vec<Uuid> = std::iter::repeat_with(Uuid::new_v4)
+        .take(cli.count)
+        .collect();
 
-    let output_format = matches
-        .value_of("format")
-        // `format` arg has a default value
-        .unwrap()
-        .parse::<OutputFormat>()
-        .unwrap_or(OutputFormat::Unix);
-
-    let uuid_format = if matches.is_present("upper") {
-        UuidFormat::Upper
-    } else {
-        UuidFormat::Lower
-    };
-
-    let uuids = std::iter::repeat_with(Uuid::new_v4).take(count).collect();
-
-    println!("{}", format_uuids(uuids, output_format, uuid_format));
+    println!("{}", format_uuids(uuids, cli.format, cli.case.uuid_format()));
 }
