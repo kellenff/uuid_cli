@@ -56,4 +56,4 @@ jobs:
         run: cargo fmt --check
 
       - name: Dry run publish
-        run: cargo publish --dry-run
+        run: cargo publish --dry-run --allow-dirty
