@@ -1,6 +1,6 @@
 [package]
 name = "uuid_cli"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Kellen Frodelius-Fujimoto <kellen@kellenfujimoto.com>"]
 edition = "2021"
 description = "A command line utility for generating UUIDs"

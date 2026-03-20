@@ -9,5 +9,8 @@ fn main() {
         .take(cli.count)
         .collect();
 
-    println!("{}", format_uuids(uuids, cli.format, cli.case.uuid_format()));
+    println!(
+        "{}",
+        format_uuids(uuids, cli.format, cli.case.uuid_format())
+    );
 }

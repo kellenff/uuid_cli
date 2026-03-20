@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  version-bump:
+    name: Version Bump Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check version was bumped
+        run: |
+          BASE_VERSION=$(git show origin/${{ github.base_ref }}:Cargo.toml | grep '^version' | head -1 | awk -F'"' '{print $2}')
+          PR_VERSION=$(grep '^version' Cargo.toml | head -1 | awk -F'"' '{print $2}')
+          echo "Base version: $BASE_VERSION"
+          echo "PR version:   $PR_VERSION"
+          if [ "$BASE_VERSION" = "$PR_VERSION" ]; then
+            echo "Error: version in Cargo.toml ($PR_VERSION) was not bumped relative to ${{ github.base_ref }}"
+            exit 1
+          fi
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
+
+      - name: Run tests
+        run: cargo test
+
+      - name: Run clippy
+        run: cargo clippy -- -D warnings
+
+      - name: Check formatting
+        run: cargo fmt --check
+
+      - name: Dry run publish
+        run: cargo publish --dry-run --allow-dirty
