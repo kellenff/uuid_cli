@@ -7,6 +7,26 @@ on:
     branches: [master]
 
 jobs:
+  version-bump:
+    name: Version Bump Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check version was bumped
+        run: |
+          BASE_VERSION=$(git show origin/${{ github.base_ref }}:Cargo.toml | grep '^version' | head -1 | awk -F'"' '{print $2}')
+          PR_VERSION=$(grep '^version' Cargo.toml | head -1 | awk -F'"' '{print $2}')
+          echo "Base version: $BASE_VERSION"
+          echo "PR version:   $PR_VERSION"
+          if [ "$BASE_VERSION" = "$PR_VERSION" ]; then
+            echo "Error: version in Cargo.toml ($PR_VERSION) was not bumped relative to ${{ github.base_ref }}"
+            exit 1
+          fi
+
   test:
     name: Test
     runs-on: ubuntu-latest
